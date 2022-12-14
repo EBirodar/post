@@ -19,5 +19,5 @@ Route::get('/', function () {
 Route::get('dashboard', 'App\Http\Controllers\UserController@dashboard')->middleware('auth');
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('post', \App\Http\Controllers\PostController::class);
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
