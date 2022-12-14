@@ -7,6 +7,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -80,13 +81,13 @@ class PostController extends Controller
      * @param  \App\Http\Requests\UpdatePostRequest  $request
      * @param  \App\Models\Post  $post
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $post)
     {
-        $name=$this->validateData()['name'];
+        $name=$this->validateData()['text'];
 //        dd($name);
         $this->updateData($post,$name);
 
-        return redirect()->route('post');
+        return redirect()->route('post.index');
     }
 
     /**
@@ -94,8 +95,23 @@ class PostController extends Controller
      *
      * @param  \App\Models\Post  $post
      */
-    public function destroy(Post $post)
+    public function destroy($post)
     {
-        //
+        $deleted = DB::table('posts')->where('id',  $post)->delete();
+        return redirect()->route('post.index');
+    }
+
+    public function validateData()
+    {
+        return request()->validate([
+            'text'=>'required'
+        ]);
+
+    }
+    public function updateData($post,$name)
+    {
+        $affected = DB::table('posts')
+            ->where('id', $post)
+            ->update(['text'=>$name]);
     }
 }

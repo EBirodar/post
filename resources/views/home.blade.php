@@ -94,8 +94,8 @@
 
                         @method('PUT')
                         @csrf
-                        <input type="text" class="hidden" name="user_id" value="{{auth()->user()->id}}">
-                        <input type="text" class="col-8 mt-2" name="name" value="{{$post->name}}">
+                        <input type="text" style="display: none" class="hidden" name="user_id" value="{{auth()->user()->id}}">
+                        <input type="text" class="col-8 mt-2" name="text" value="{{$post->text}}">
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 @endif
